@@ -51,23 +51,24 @@ class _CharactersScreenState extends State<CharactersScreen> {
           create: (context) => _characterBloc,
           child: BlocConsumer<MainPageBloc, MainPageState>(
             listener: (context, state) {
-              if (state is InitialMainPageState) {
-              } else if (state is LoadingMainPageState) {
-              } else if (state is SuccessfulMainPageState) {
-                CharacterInfo characterInfo = state.props.cast().first;
-                records = characterInfo.characters!;
-                int lastPage = characterInfo.pages!;
-                final _next = storePageKey++;
-                if (_next > lastPage) {
-                  _pagingController.appendLastPage(records);
-                } else {
-                  _pagingController.appendPage(records, _next);
-                }
+              try {
+                if (state is InitialMainPageState) {
+                } else if (state is LoadingMainPageState) {
+                } else if (state is SuccessfulMainPageState) {
+                  CharacterInfo characterInfo = state.props.cast().first;
+                  records = characterInfo.characters!;
+                  int lastPage = characterInfo.pages!;
+                  final _next = storePageKey++;
+                  if (_next > lastPage) {
+                    _pagingController.appendLastPage(records);
+                  } else {
+                    _pagingController.appendPage(records, _next);
+                  }
 
-                print("Testing");
-              } else {
-                print("Inside error: ");
-                //_pagingController.error = state.error;
+                  print("Testing");
+                }
+              } on Exception catch (e) {
+                _pagingController.error = e;
               }
             },
             builder: (blocContext, state) {
