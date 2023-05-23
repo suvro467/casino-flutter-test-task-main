@@ -31,11 +31,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void initState() {
     super.initState();
 
-    //*so at event add list of records
     _pagingController.addPageRequestListener(
-      (pageKey) => _characterBloc.add(
-          //GetTimeslotViewEvent(records: records, offset: pageKey, limit: 10)
-          GetTestDataOnMainPageEvent(pageKey)),
+      (pageKey) => _characterBloc.add(GetTestDataOnMainPageEvent(storePageKey)),
     );
   }
 
@@ -52,14 +49,10 @@ class _CharactersScreenState extends State<CharactersScreen> {
       body: SafeArea(
         child: BlocProvider(
           create: (context) => _characterBloc,
-          /* create: (context) => MainPageBloc(
-            InitialMainPageState(),
-            GetIt.I.get<CharactersRepository>(),
-          )..add(GetTestDataOnMainPageEvent(1)), */
           child: BlocConsumer<MainPageBloc, MainPageState>(
             listener: (context, state) {
-              if (state is LoadingMainPageState) {
-                //return _loadingWidget(context);
+              if (state is InitialMainPageState) {
+              } else if (state is LoadingMainPageState) {
               } else if (state is SuccessfulMainPageState) {
                 CharacterInfo characterInfo = state.props.cast().first;
                 records = characterInfo.characters!;
@@ -73,25 +66,27 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
                 print("Testing");
               } else {
+                print("Inside error: ");
                 //_pagingController.error = state.error;
               }
             },
             builder: (blocContext, state) {
-              return PagedListView<int, Character>(
-                  pagingController: _pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Character>(
-                      itemBuilder: (context, character, index) =>
-                          _characterWidget(
-                            context,
-                            character,
-                          )));
-              /* if (state is LoadingMainPageState) {
+              if (state is InitialMainPageState) {
+                return PagedListView<int, Character>(
+                    pagingController: _pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<Character>(
+                        itemBuilder: (context, character, index) =>
+                            _characterWidget(
+                              context,
+                              character,
+                            )));
+              } else if (state is LoadingMainPageState) {
                 return _loadingWidget(context);
               } else if (state is SuccessfulMainPageState) {
                 return _successfulWidget(context, state);
               } else {
                 return Center(child: const Text("error"));
-              } */
+              }
             },
           ),
         ),
