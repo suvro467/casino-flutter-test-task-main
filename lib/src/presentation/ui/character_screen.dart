@@ -6,8 +6,11 @@ import 'package:casino_test/src/presentation/bloc/main_event.dart';
 import 'package:casino_test/src/presentation/bloc/main_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../core/utils/network_status_service.dart';
 
 @immutable
 class CharactersScreen extends StatefulWidget {
@@ -30,6 +33,9 @@ class _CharactersScreenState extends State<CharactersScreen> {
   @override
   void initState() {
     super.initState();
+
+    Get.put<NetworkStatusService>(NetworkStatusService(context),
+        permanent: true);
 
     //*so at event add list of records
     _pagingController.addPageRequestListener(
