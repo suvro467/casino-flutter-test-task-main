@@ -49,49 +49,51 @@ class _CharactersScreenState extends State<CharactersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _characterBloc,
-        /* create: (context) => MainPageBloc(
-          InitialMainPageState(),
-          GetIt.I.get<CharactersRepository>(),
-        )..add(GetTestDataOnMainPageEvent(1)), */
-        child: BlocConsumer<MainPageBloc, MainPageState>(
-          listener: (context, state) {
-            if (state is LoadingMainPageState) {
-              //return _loadingWidget(context);
-            } else if (state is SuccessfulMainPageState) {
-              CharacterInfo characterInfo = state.props.cast().first;
-              records = characterInfo.characters!;
-              int lastPage = characterInfo.pages!;
-              final _next = storePageKey++;
-              if (_next > lastPage) {
-                _pagingController.appendLastPage(records);
-              } else {
-                _pagingController.appendPage(records, _next);
-              }
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) => _characterBloc,
+          /* create: (context) => MainPageBloc(
+            InitialMainPageState(),
+            GetIt.I.get<CharactersRepository>(),
+          )..add(GetTestDataOnMainPageEvent(1)), */
+          child: BlocConsumer<MainPageBloc, MainPageState>(
+            listener: (context, state) {
+              if (state is LoadingMainPageState) {
+                //return _loadingWidget(context);
+              } else if (state is SuccessfulMainPageState) {
+                CharacterInfo characterInfo = state.props.cast().first;
+                records = characterInfo.characters!;
+                int lastPage = characterInfo.pages!;
+                final _next = storePageKey++;
+                if (_next > lastPage) {
+                  _pagingController.appendLastPage(records);
+                } else {
+                  _pagingController.appendPage(records, _next);
+                }
 
-              print("Testing");
-            } else {
-              //_pagingController.error = state.error;
-            }
-          },
-          builder: (blocContext, state) {
-            return PagedListView<int, Character>(
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Character>(
-                    itemBuilder: (context, character, index) =>
-                        _characterWidget(
-                          context,
-                          character,
-                        )));
-            /* if (state is LoadingMainPageState) {
-              return _loadingWidget(context);
-            } else if (state is SuccessfulMainPageState) {
-              return _successfulWidget(context, state);
-            } else {
-              return Center(child: const Text("error"));
-            } */
-          },
+                print("Testing");
+              } else {
+                //_pagingController.error = state.error;
+              }
+            },
+            builder: (blocContext, state) {
+              return PagedListView<int, Character>(
+                  pagingController: _pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<Character>(
+                      itemBuilder: (context, character, index) =>
+                          _characterWidget(
+                            context,
+                            character,
+                          )));
+              /* if (state is LoadingMainPageState) {
+                return _loadingWidget(context);
+              } else if (state is SuccessfulMainPageState) {
+                return _successfulWidget(context, state);
+              } else {
+                return Center(child: const Text("error"));
+              } */
+            },
+          ),
         ),
       ),
     );
