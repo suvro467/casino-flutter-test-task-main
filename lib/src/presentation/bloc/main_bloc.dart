@@ -25,8 +25,8 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     DataLoadedOnMainPageEvent event,
     Emitter<MainPageState> emit,
   ) async {
-    if (event.characters != null) {
-      emit(SuccessfulMainPageState(event.characters!));
+    if (event.characterInfo != null) {
+      emit(SuccessfulMainPageState(event.characterInfo!));
     } else {
       emit(UnSuccessfulMainPageState());
     }

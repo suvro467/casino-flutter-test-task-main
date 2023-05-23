@@ -1,4 +1,5 @@
 import 'package:casino_test/src/data/models/character.dart';
+import 'package:casino_test/src/data/models/character_info.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class MainPageState extends Equatable {}
@@ -19,10 +20,10 @@ class UnSuccessfulMainPageState extends MainPageState {
 }
 
 class SuccessfulMainPageState extends MainPageState {
-  final List<Character> characters;
+  final CharacterInfo characterInfo;
 
-  SuccessfulMainPageState(this.characters);
+  SuccessfulMainPageState(this.characterInfo);
 
   @override
-  List<Object> get props => [characters];
+  List<Object> get props => [characterInfo];
 }

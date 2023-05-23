@@ -1,4 +1,5 @@
 import 'package:casino_test/src/data/models/character.dart';
+import 'package:casino_test/src/data/models/character_info.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class MainPageEvent extends Equatable {
@@ -25,10 +26,10 @@ class LoadingDataOnMainPageEvent extends MainPageEvent {
 }
 
 class DataLoadedOnMainPageEvent extends MainPageEvent {
-  final List<Character>? characters;
+  final CharacterInfo? characterInfo;
 
-  const DataLoadedOnMainPageEvent(this.characters);
+  const DataLoadedOnMainPageEvent(this.characterInfo);
 
   @override
-  List<Object?> get props => [characters];
+  List<Object?> get props => [characterInfo];
 }
