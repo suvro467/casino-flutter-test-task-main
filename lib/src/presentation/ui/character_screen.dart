@@ -21,6 +21,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
     GetIt.I.get<CharactersRepository>(),
   );
 
+  int storePageKey = 1;
+
   List<Character> records = [];
   final PagingController<int, Character> _pagingController =
       PagingController(firstPageKey: 0);
@@ -61,7 +63,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
               CharacterInfo characterInfo = state.props.cast().first;
               records = characterInfo.characters!;
               int lastPage = characterInfo.pages!;
-              final _next = 1 + records.length;
+              final _next = storePageKey++;
               if (_next > lastPage) {
                 _pagingController.appendLastPage(records);
               } else {

@@ -14,6 +14,7 @@ class CharactersRepositoryImpl implements CharactersRepository {
 
   @override
   Future<CharacterInfo?> getCharacters(int page) async {
+    print("Page Number : " + page.toString());
     var client = Client();
     final charResult = await client.get(
       Uri.parse("https://rickandmortyapi.com/api/character/?page=$page"),
