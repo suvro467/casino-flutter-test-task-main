@@ -72,14 +72,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
             },
             builder: (blocContext, state) {
               if (state is InitialMainPageState) {
-                return PagedListView<int, Character>(
-                    pagingController: _pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<Character>(
-                        itemBuilder: (context, character, index) =>
-                            _characterWidget(
-                              context,
-                              character,
-                            )));
+                return _initialWidget(context, state);
               } else if (state is LoadingMainPageState) {
                 return _loadingWidget(context);
               } else if (state is SuccessfulMainPageState) {
@@ -110,6 +103,18 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget _successfulWidget(
       BuildContext context, SuccessfulMainPageState state) {
+    return PagedListView<int, Character>(
+      pagingController: _pagingController,
+      //cacheExtent: double.infinity,
+      builderDelegate: PagedChildBuilderDelegate<Character>(
+          itemBuilder: (context, character, index) {
+        //state.characters[index]
+        return _characterWidget(context, character);
+      }),
+    );
+  }
+
+  Widget _initialWidget(BuildContext context, InitialMainPageState state) {
     return PagedListView<int, Character>(
       pagingController: _pagingController,
       //cacheExtent: double.infinity,
