@@ -6,6 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   final CharactersRepository _charactersRepository;
 
+  late MainPageEvent _previousEvent;
+  @override
+  void onEvent(MainPageEvent event) {
+    _previousEvent = event;
+    super.onEvent(event);
+  }
+
   MainPageBloc(
     MainPageState initialState,
     this._charactersRepository,
@@ -40,6 +47,13 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
       (value) {
         add(DataLoadedOnMainPageEvent(value));
       },
-    );
+    ).onError((error, stackTrace) {
+      print("OnError called");
+      // In case of any error, this unsuccessful event will be added
+      // to the bloc unless and untill this event is successfully emited.
+      if (_previousEvent != null) {
+        add(_previousEvent);
+      }
+    });
   }
 }
