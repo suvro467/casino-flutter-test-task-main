@@ -150,11 +150,63 @@ class _CharactersScreenState extends State<CharactersScreen> {
               padding: const EdgeInsets.all(2.0),
               child: Text(character.name),
             ),
-            Image.network(
-              character.image,
-              width: 50,
-              height: 50,
+            Row(
+              children: [
+                Image.network(
+                  character.image,
+                  width: 50,
+                  height: 50,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.08),
+                          offset: const Offset(
+                            0,
+                            0,
+                          ),
+                          blurRadius: 6.0,
+                          spreadRadius: 0.0,
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    //height: 174,
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [Text(character.species)],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Text(
+                  character.gender,
+                  style: TextStyle(
+                    color: Color(0xff214A96),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
