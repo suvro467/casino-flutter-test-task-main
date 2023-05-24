@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 
 @immutable
 class CharactersScreen extends StatefulWidget {
@@ -147,49 +148,102 @@ class _CharactersScreenState extends State<CharactersScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(character.name),
+              padding: EdgeInsets.only(
+                bottom: 5.0,
+              ),
+              child: Text(
+                character.name,
+                style: TextStyle(
+                  color: Color(0xff214A96),
+                  fontSize: 14,
+                ),
+              ),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(
-                  character.image,
-                  width: 50,
-                  height: 50,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Image.network(
+                    character.image,
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 50,
                 ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.08),
-                          offset: const Offset(
-                            0,
-                            0,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: Text(
+                            "Species: ",
+                            style: TextStyle(
+                              color: Color(0xff214A96),
+                              fontSize: 13,
+                            ),
                           ),
-                          blurRadius: 6.0,
-                          spreadRadius: 0.0,
+                        ),
+                        Text(
+                          character.species,
+                          style: TextStyle(
+                            color: Color(0xff214A96),
+                            fontSize: 13,
+                          ),
                         ),
                       ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
                     ),
-                    //height: 174,
-                    alignment: Alignment.center,
-                    child: Column(
+                    Row(
                       children: [
-                        Row(
-                          children: [Text(character.species)],
-                        )
+                        SizedBox(
+                          width: 100,
+                          child: Text(
+                            "Status: ",
+                            style: TextStyle(
+                              color: Color(0xff214A96),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          character.status,
+                          style: TextStyle(
+                            color: Color(0xff214A96),
+                            fontSize: 13,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: Text(
+                            "Created: ",
+                            style: TextStyle(
+                              color: Color(0xff214A96),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          DateFormat('MM/dd/yyyy hh:mm a').format(
+                              DateTime.parse(
+                                  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                                      .parse(character.created)
+                                      .toString())),
+                          style: TextStyle(
+                            color: Color(0xff214A96),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
