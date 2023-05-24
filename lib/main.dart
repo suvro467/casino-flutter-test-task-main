@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Test app',
       home: CharactersScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
