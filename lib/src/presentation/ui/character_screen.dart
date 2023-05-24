@@ -65,8 +65,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
                   } else {
                     _pagingController.appendPage(records, _next);
                   }
-
-                  print("Testing");
                 }
               } on Exception catch (e) {
                 _pagingController.error = e;
@@ -105,36 +103,22 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget _successfulWidget(
       BuildContext context, SuccessfulMainPageState state) {
-    return RefreshIndicator(
-      onRefresh: () => Future.sync(
-        () => _pagingController.refresh(),
-      ),
-      child: PagedListView<int, Character>(
-        pagingController: _pagingController,
-        //cacheExtent: double.infinity,
-        builderDelegate: PagedChildBuilderDelegate<Character>(
-            itemBuilder: (context, character, index) {
-          //state.characters[index]
-          return _characterWidget(context, character);
-        }),
-      ),
+    return PagedListView<int, Character>(
+      pagingController: _pagingController,
+      builderDelegate: PagedChildBuilderDelegate<Character>(
+          itemBuilder: (context, character, index) {
+        return _characterWidget(context, character);
+      }),
     );
   }
 
   Widget _initialWidget(BuildContext context, InitialMainPageState state) {
-    return RefreshIndicator(
-      onRefresh: () => Future.sync(
-        () => _pagingController.refresh(),
-      ),
-      child: PagedListView<int, Character>(
-        pagingController: _pagingController,
-        //cacheExtent: double.infinity,
-        builderDelegate: PagedChildBuilderDelegate<Character>(
-            itemBuilder: (context, character, index) {
-          //state.characters[index]
-          return _characterWidget(context, character);
-        }),
-      ),
+    return PagedListView<int, Character>(
+      pagingController: _pagingController,
+      builderDelegate: PagedChildBuilderDelegate<Character>(
+          itemBuilder: (context, character, index) {
+        return _characterWidget(context, character);
+      }),
     );
   }
 
