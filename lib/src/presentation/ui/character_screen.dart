@@ -147,18 +147,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 5.0,
-              ),
-              child: Text(
-                character.name,
-                style: TextStyle(
-                  color: Color(0xff214A96),
-                  fontSize: 14,
-                ),
-              ),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -253,14 +241,21 @@ class _CharactersScreenState extends State<CharactersScreen> {
             Row(
               children: [
                 Text(
-                  character.gender,
+                  character.name,
                   style: TextStyle(
                     color: Color(0xff214A96),
-                    fontSize: 12,
+                    fontSize: 14,
                   ),
                 ),
               ],
-            )
+            ),
+            Text(
+              " (${character.gender})",
+              style: TextStyle(
+                color: Color(0xff214A96),
+                fontSize: 12,
+              ),
+            ),
           ],
         ),
       ),
