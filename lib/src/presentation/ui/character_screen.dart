@@ -105,26 +105,36 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget _successfulWidget(
       BuildContext context, SuccessfulMainPageState state) {
-    return PagedListView<int, Character>(
-      pagingController: _pagingController,
-      //cacheExtent: double.infinity,
-      builderDelegate: PagedChildBuilderDelegate<Character>(
-          itemBuilder: (context, character, index) {
-        //state.characters[index]
-        return _characterWidget(context, character);
-      }),
+    return RefreshIndicator(
+      onRefresh: () => Future.sync(
+        () => _pagingController.refresh(),
+      ),
+      child: PagedListView<int, Character>(
+        pagingController: _pagingController,
+        //cacheExtent: double.infinity,
+        builderDelegate: PagedChildBuilderDelegate<Character>(
+            itemBuilder: (context, character, index) {
+          //state.characters[index]
+          return _characterWidget(context, character);
+        }),
+      ),
     );
   }
 
   Widget _initialWidget(BuildContext context, InitialMainPageState state) {
-    return PagedListView<int, Character>(
-      pagingController: _pagingController,
-      //cacheExtent: double.infinity,
-      builderDelegate: PagedChildBuilderDelegate<Character>(
-          itemBuilder: (context, character, index) {
-        //state.characters[index]
-        return _characterWidget(context, character);
-      }),
+    return RefreshIndicator(
+      onRefresh: () => Future.sync(
+        () => _pagingController.refresh(),
+      ),
+      child: PagedListView<int, Character>(
+        pagingController: _pagingController,
+        //cacheExtent: double.infinity,
+        builderDelegate: PagedChildBuilderDelegate<Character>(
+            itemBuilder: (context, character, index) {
+          //state.characters[index]
+          return _characterWidget(context, character);
+        }),
+      ),
     );
   }
 
